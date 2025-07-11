@@ -1,24 +1,25 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd-demo-nginx-helm
+  name: nginx-helm
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
+
 spec:
   project: default
 
   source:
-    repoURL: 'https://charts.bitnami.com/bitnami'
+    repoURL: 'registry-1.docker.io/bitnamicharts'
     chart: nginx
-    targetRevision: "15.0.3"
+    targetRevision: "21.0.6"
     helm:
-      values: |
+      valuesObject:
         service:
           type: LoadBalancer
 
   destination: 
-    server: in-cluster
+    server: 'https://kubernetes.default.svc'
     namespace: test
 
   syncPolicy:
