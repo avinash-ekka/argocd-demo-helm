@@ -9,11 +9,16 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/avinash-ekka/argocd-demo-helm
-    targetRevision: HEAD
+    repoURL: 'https://charts.bitnami.com/bitnami'
+    chart: nginx
+    targetRevision: "15.0.3"
+    helm:
+      values: |
+        service:
+          type: LoadBalancer
 
   destination: 
-    server: https://kubernetes.default.svc
+    server: in-cluster
     namespace: test
 
   syncPolicy:
